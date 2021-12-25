@@ -1,5 +1,5 @@
 <div align="center">
-<code><img height="200" src="./img/syBOT.py" float="left"></code>
+<code><img height="200" src="../img/syBOT.png" float="left"></code>
 <h1>syBOT</h1>
 </div>
 
