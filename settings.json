@@ -1,0 +1,11 @@
+{
+    "version": "beta",
+    "configurations": [
+        {
+            "name": "syBOT Discord",
+            "type": "python",
+            "copyright": "By Gabriel Carvalho",
+            "year": 2021
+        }
+    ]
+}
