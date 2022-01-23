@@ -4,11 +4,11 @@ from discord import colour
 import pandas as pd
 import json
 import sys
+import youtube_dl
 
 sys.dont_write_bytecode = True
 
 class MyClient(discord.Client):
-    
     with open('C:\\Users\\PC\\Desktop\\Gabriel\\syBot\\src\\urls.json', 'r', encoding='utf8') as f:
         global urls
         urls = json.load(f)
@@ -21,24 +21,26 @@ class MyClient(discord.Client):
         print('Message from {0.author}: {0.content}'.format(message))
         # DEV
         developer = "('gabs')"
-        global num, valorant, lol
+        global num, valorant, lol, wr, cs
         num = 10
         c = 0
         valorant = ['Em espera', 'Em espera', 'Em espera', 'Em espera', 'Em espera', 'Em espera', 'Em espera', 'Em espera', 'Em espera', 'Em espera']
         lol = ['Em espera', 'Em espera', 'Em espera', 'Em espera', 'Em espera', 'Em espera', 'Em espera', 'Em espera', 'Em espera', 'Em espera']
+        wr = ['Em espera', 'Em espera', 'Em espera', 'Em espera', 'Em espera', 'Em espera', 'Em espera', 'Em espera', 'Em espera', 'Em espera']
+        cs = ['Em espera', 'Em espera', 'Em espera', 'Em espera', 'Em espera', 'Em espera', 'Em espera', 'Em espera', 'Em espera', 'Em espera']
 
-        # ENVIANDO AS REGRAS DO SERVIDOR
+        
 
-        if message.content == '?regras' or message.content == '?rules':
-            await message.channel.send(f'Olá {message.author.name}, as regras do servidor são: {os.linesep} 1. Respeitar os membros do servidor; {os.linesep} 2. Não enviar conteúdo +18 fora do canal específico {os.linesep} 3. Não Inciar partidas fora do canal de Games!')
-
-        # ENVIANDO MENSAGEM DIRETA 
-        elif message.content == '?syBOT' or message.content == '?about' or message.content == '?sobre':
+        if message.content == '!syBOT' or message.content == '!about' or message.content == '!sobre':
             await message.author.send(f'Olá {message.author.name}, eu sou o syBOT! Fui desenvolvido pelo {developer} com o objetivo de auxiliar nos servidores do discord.Eu ainda estou em desenvolvimento (BETA) mas posso ajudar bastante, para vizualizar os comandos, vá ao canal e digite ?comandos ou ?commands {os.linesep} Atenciosamente, syBOT <3 !')
 
         # COMANDOS 
-        elif message.content == '?comandos' or message.content == '?commands':
-            await message.channel.send(f'Vou te mostrar todos os meus comandos. Eles estão disponíveis em português/inglês! {os.linesep} 1. Para mostrar os comandosc digite ?comandos ou ?commands {os.linesep} 2. Para mostrar a descrição do bot, digite ?syBOT ou ?about/?sobre {os.linesep} 3. Para verificar as regras do servidor, digte ?regras ou ?rules {os.linesep} 4. Para carregar um vídeo, digite !video: url {os.linesep} 5.Você pode procurar por palavras chave como "youtube"{os.linesep} 6. Para ativar prontidão à partida de Valorant, digite !valorant {os.linesep} 7. Para ativar prontidão à partida de League of Legends, digite !lol')
+        elif message.content == '!comandos' or message.content == '!commands':
+            await message.channel.send(f'Vou te mostrar todos os meus comandos. Eles estão disponíveis em português/inglês! {os.linesep} 1. Para mostrar os comandos, digite !comandos ou !commands {os.linesep} 2. Para mostrar a descrição do bot, digite !syBOT ou !about/!sobre {os.linesep} 3. Para ativar prontidão à partida de Valorant, digite !valorant {os.linesep} 4. Para ativar prontidão à partida de League of Legends, digite !lol {os.linesep} 5. Para ativar prontidão à partida de LOL - WildRift, digite !wr {os.linesep} 6. Para ativar prontidão à partida de CS:GO, digite !cs {os.linesep} 7. Mostrar o desenvolvedor, digite !dev')
+        # DEV
+        elif message.content.lower() == '!dev':
+            await message.channel.send(f'Powered by Gabriel Carvalho {os.linesep} Github: https://github.com/GabPhoenix {os.linesep} Instagram: https://www.instagram.com/iamgabc/')
+
         # TYPE PYTHON
         elif message.content.lower() == 'python':
             for key, value in urls.items():
@@ -306,8 +308,96 @@ class MyClient(discord.Client):
                 embed.set_footer(text=f'faltam {num} jogadores!')
 
                 await message.channel.send(embed = embed)
-                
+        # GAME WILD RIFT
+        elif message.content.lower() == '!wr':
+            if not message.author.name in wr:
+                num -= 1
+                embed = discord.Embed(
+                    description = 'Partida de WildRift',
+                    colour = discord.Color.blue()   
+                )
+                embed.set_author(name='Lol - WildRift', icon_url='https://img.ibxk.com.br/2020/11/10/10174259667315.jpg')
+                for i in wr:
+                    if wr[c] == 'Em espera':
+                        wr.remove(lol[c])
+                        wr.insert(c, message.author.name)
+                        c +=1
+                        break
 
+                embed.add_field(name=wr[0], value='-', inline=1)
+                embed.add_field(name='     |', value='-', inline=1)
+                embed.add_field(name=wr[1], value='-', inline=1)
+                embed.add_field(name=wr[2], value='-', inline=1)
+                embed.add_field(name='     |', value='-', inline=1)
+                embed.add_field(name=wr[3], value='-', inline=1)
+                embed.add_field(name=wr[4], value='-', inline=1)
+                embed.add_field(name='     |', value='-', inline=1)
+                embed.add_field(name=wr[5], value='-', inline=1)
+                embed.add_field(name=wr[6], value='-', inline=1)
+                embed.add_field(name='     |', value='-', inline=1)
+                embed.add_field(name=wr[7], value='-', inline=1)
+                embed.add_field(name=wr[8], value='-', inline=1)
+                embed.add_field(name='     |', value='-', inline=1)
+                embed.add_field(name=wr[9], value='-', inline=1)
+
+
+                if wr[9] != 'Em espera':
+                    wr = ['Em espera', 'Em espera', 'Em espera', 'Em espera', 'Em espera', 'Em espera', 'Em espera', 'Em espera', 'Em espera', 'Em espera']
+
+
+                embed.set_footer(text=f'faltam {num} jogadores!')
+
+                await message.channel.send(embed = embed)
+
+        # GAME CS:GO
+        elif message.content.lower() == '!cs':
+            if not message.author.name in cs:
+                num -= 1
+                embed = discord.Embed(
+                    description = 'Partida de CS:GO',
+                    colour = discord.Color.gold()
+                )
+                embed.set_author(name='CS:GO', icon_url='https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ_UkSn7PNFvaHwrsoPmCilreY5ThFDI0HLoBamNI8YyXvlm40wBu7oveM6WJT636y9kXU&usqp=CAU')
+                for i in cs:
+                    if cs[c] == 'Em espera':
+                        cs.remove(lol[c])
+                        cs.insert(c, message.author.name)
+                        c +=1
+                        break
+
+                embed.add_field(name=cs[0], value='-', inline=1)
+                embed.add_field(name='     |', value='-', inline=1)
+                embed.add_field(name=cs[1], value='-', inline=1)
+                embed.add_field(name=cs[2], value='-', inline=1)
+                embed.add_field(name='     |', value='-', inline=1)
+                embed.add_field(name=cs[3], value='-', inline=1)
+                embed.add_field(name=cs[4], value='-', inline=1)
+                embed.add_field(name='     |', value='-', inline=1)
+                embed.add_field(name=cs[5], value='-', inline=1)
+                embed.add_field(name=cs[6], value='-', inline=1)
+                embed.add_field(name='     |', value='-', inline=1)
+                embed.add_field(name=cs[7], value='-', inline=1)
+                embed.add_field(name=cs[8], value='-', inline=1)
+                embed.add_field(name='     |', value='-', inline=1)
+                embed.add_field(name=cs[9], value='-', inline=1)
+
+
+                if cs[9] != 'Em espera':
+                    cs = ['Em espera', 'Em espera', 'Em espera', 'Em espera', 'Em espera', 'Em espera', 'Em espera', 'Em espera', 'Em espera', 'Em espera']
+
+
+                embed.set_footer(text=f'faltam {num} jogadores!')
+
+                await message.channel.send(embed = embed)
+
+        # BADWORDS DETECTION 
+        elif message.content.lower() == 'filho da puta' or message.content.lower() == 'gado' or message.content.lower() == 'puta' or message.content.lower() == 'rapariga' or message.content.lower() == 'caralho' or message.content.lower() == 'motherfucker' or message.content.lower() == 'bitch' or message.content.lower() == 'mtf' or message.content.lower() == 'mtfb' or message.content.lower() == 'fdp' or message.content.lower() == 'foda-se' or message.content.lower() == 'fodase' or message.content.lower() == 'foda se' or message.content.lower() == 'vai se fuder' or message.content.lower() == 'vão se fuder' or message.content.lower() == 'vao se fuder' or message.content.lower() == 'vsf':
+            await message.author.send(f'Olá {message.author.name}, é devidamente proibido o envio de palavrões no servidor. A repetição dessa conduta poderá resultar em punições futuras')
+            await message.channel.purge(limit=1)
+
+        # WARNING NOT VERIFYED LINK
+        elif message.content[0:5] == 'http/':
+            await message.channel.send(f'ATENÇÃO: este link pode não ser seguro!')
 
     # MENSAGEM DE MEMBRO NOVO
     async def on_member_join(self, member):
